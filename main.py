@@ -7,6 +7,7 @@ timestart= time.perf_counter()
 #Take in the directed acyclic graph file into memory
 
 #build edge list graph -> something like edgelist = graphBuilder(Research Rabbit)
+#->Please make the actual algorithm to convert the researchRabbit export into an edgelist, we can't use some papers and a hard coded list
 
 #adjacencyList = adjacencyBuilder(edgelist) ->dfs to check for circular edges
 
