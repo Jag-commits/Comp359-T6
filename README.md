@@ -1,4 +1,4 @@
-COMP 349, ON 1 Assignment 2 README 
+COMP 359, ON 1 Assignment 2 README 
 
 Responsibility Split: https://docs.google.com/document/d/1CNVFqzEXJpOW_nXpOcXWMrRaES8_cz77Pl4NT2S9Sik/edit?usp=sharing 
 
