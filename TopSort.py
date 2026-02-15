@@ -27,7 +27,7 @@ class TopSort:
                 bfsQueue.append(Node)
         
 
-        while (bfsQueue):
+        while (len(bfsQueue)!=0):
             #So it'll pop the first node, add it's children to the queue.
             firstNode = bfsQueue.popleft()
             #Edge case where the list somehow has the node as a dependency, but not as a key
@@ -44,12 +44,13 @@ class TopSort:
         #My logic was that the papers that were cited the most should be foundational knowledge for papers that have no or few citations
         #From Kahn's algo, the papers that are not cited by anything ie indegree =0 come first.
         return sortedList[::-1]
-
-    inputList = {"D": ["B", "C"],"B": ["A"],"C": ["A"],"A": []}
-    #The list doesn't have A as key test case
-    inputList2 = {"D": ["B", "C"],"B": ["A"],"C": ["A"]}
-    print(topologicalSort(inputList))
-    print(topologicalSort(inputList2))
+    
+    #A simple method for testing purposes, it just returns a true or false for if the lists match
+    def verifySort(list)->bool:
+        #The test case graph is pretty much a rectangle, you can get 2 variants for the sort
+        trueList1 = ["Paper A","Paper B","Paper C","Paper D"]
+        trueList2 = ["Paper A","Paper C","Paper B","Paper D"]
+        return (trueList1==list or trueList2==list)
 
         
 
