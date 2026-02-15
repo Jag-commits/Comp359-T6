@@ -10,7 +10,8 @@ Independent Variables
 Dependent Variables
 - Ordered List of Papers (Foundational Knowledge->Newer Papers)
 - Time to Convert CSV into adjacency list (HDD vs SSD)
-- **Maybe I could make another implementation of topological sort with an edgelist and compare time to sort
+- Time to sort adjacency list
+- Time to sort edge list
 
 Baseline for Verification:
 - The sorted list will be compared to manually verified variants for the correct reading order
@@ -20,6 +21,7 @@ Evaluation Method
 - The citation csv is first converted into an edgelist.
 - Each edge is mapped into an adjacency list and checked for cycles
 - Accuracy is measured against the manually verified list of variants
+- The time to sort an edge list and the associated adjacency list are compared
   
 Failure Conditions
 - Missing Nodes/Papers in the topological sorting output.
