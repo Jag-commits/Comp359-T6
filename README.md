@@ -1,4 +1,4 @@
-COMP 349, ON 1 Assignment 2 README 
+COMP 359, ON 1 Assignment 2 README 
 
 Responsibility Split: https://docs.google.com/document/d/1CNVFqzEXJpOW_nXpOcXWMrRaES8_cz77Pl4NT2S9Sik/edit?usp=sharing 
 
@@ -9,13 +9,25 @@ Independent Variables
 
 Dependent Variables
 - Ordered List of Papers (Foundational Knowledge->Newer Papers)
+- Time to Convert CSV into adjacency list (HDD vs SSD)
+- Time to sort adjacency list
+- Time to sort edge list
+
+Baseline for Verification:
+- The sorted list will be compared to manually verified variants for the correct reading order
   
 Evaluation Method
-- *Empty for now*
+- The citation graph csv is loaded into memory
+- The citation csv is first converted into an edgelist.
+- Each edge is mapped into an adjacency list and checked for cycles
+- Accuracy is measured against the manually verified list of variants
+- The time to sort an edge list and the associated adjacency list are compared
   
 Failure Conditions
 - Missing Nodes/Papers in the topological sorting output.
-- Newer Papers appear before the papers they cite in outputted list
+- Newer Papers appear before the papers they cite in final list
+- Citation Graph has cycles
+
 Constraints
 - Nodes are limited to <=8 Papers.
 
@@ -28,3 +40,6 @@ Design Decisions
 1. TopSort.py -> This class is responsible for using topological sort to take the adjacency list and output an array representing papers with the most citations and least citations amongst themselves. In effect, newer papers build upon the foundational knowledge of the papers they cite.
 2. Main.py -> This class is responsible for taking in the citation graph exported from Research Rabbit, converting the list to an edge list, then converting the edge list to an adjacency list and finally ordering the papers for the user.
 
+
+*Analysis*
+-time complexity, if we encountered errors, how the performance differs across a hdd over an ssd. 
