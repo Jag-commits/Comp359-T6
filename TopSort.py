@@ -1,5 +1,6 @@
 from collections import deque
-
+from io import *
+import csv
 class TopSort:
     #Referencing Kahn's BFS Topological Sorting Algorithm, Just the concept, not the code
     #We decided on using adjacency lists from researching Kahn's algo -> dictionaries are easier to iterate through compared to 2d lists
@@ -78,9 +79,6 @@ class TopSort:
                     if inDegree[connectedNode]==0: 
                         bfsQueue.append(connectedNode)
         return sortedList[::-1]
-        
-            
-
     
     #A simple method for testing purposes, it just returns a true or false for if the lists match
     def verifySort(list)->bool:
@@ -88,9 +86,29 @@ class TopSort:
         trueList1 = ["Paper A","Paper B","Paper C","Paper D"]
         trueList2 = ["Paper A","Paper C","Paper B","Paper D"]
         return (trueList1==list or trueList2==list)
-
+    
+    #Extract Data and write.
+    #Sorted Edge List should be identical or a viable variation of the sorted Adjacency list
+    def finalFile(sortedAdjacencyList,csvFile):
+        print(sortedAdjacencyList)
+        Papers =[]
+        with open(csvFile, "r", encoding="utf-8") as f:
+            reader = list(csv.DictReader(f))  # Load once
+            for RRabbitID in sortedAdjacencyList:
+                for rows in reader:
+                    if ((rows["ResearchRabbitId"]).strip())==RRabbitID:
+                        #Credit goes to Jang for extracting information from csv ->Code segment from commit that had to be reverted due to it replacing a partner's code
+                        doi = (rows["DOI"])
+                        year = (rows["Year"])
+                        title = (rows["Title"])
+                        link = "(no link)"
+                        if doi and doi != "(missing DOI)":
+                            link = f"https://doi.org/{doi}"   
+                        Papers.append(f"{doi},{year},{title},{link}")
+                        break
         
-
-        
-
-        
+        with open("Sorted Papers.csv","w",encoding="utf-8") as file:
+            file.write("DOI,Year,Title,Link\n")
+            for paper in Papers:
+                file.write(f"{paper}\n")
+            
