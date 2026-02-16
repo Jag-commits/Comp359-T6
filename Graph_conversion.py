@@ -46,6 +46,11 @@ import csv
 # new,ref
 # PaperC,PaperA
 
+def clean_name(name):
+    if name is None:
+        return ""
+    return " ".join(name.strip().split())
+
 def load_citation_data(file_name):
     pairs = []
 
@@ -75,4 +80,27 @@ def assign_ids(papers):
 
     return id_map, reverse_map
 
-
+def build_edges(pairs, reverse=False, use_ids=False):
+    # collect all paper names first
+    all_names = []
+    for a, b in pairs:
+        all_names.extend([a, b])
+    
+    id_map, reverse_map = {}, {}
+    if use_ids:
+        id_map, reverse_map = assign_ids(all_names)
+    
+    edges = []
+    for new_paper, ref_paper in pairs:
+        # get id if using ids, otherwise use name
+        u = id_map.get(new_paper, new_paper)
+        v = id_map.get(ref_paper, ref_paper)
+        
+        if reverse:
+            # reverse direction for reading order (ref -> new)
+            edges.append((v, u))
+        else:
+            # citation direction (new -> ref)
+            edges.append((u, v))
+    
+    return edges, id_map, reverse_map
