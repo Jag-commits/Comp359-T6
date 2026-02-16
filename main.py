@@ -1,22 +1,34 @@
 from TopSort import *
 import time
-import csv
 from Graph_conversion import *
 from TopSort import *
-#import the edge list converter
-#import the adjacencybuilder
+from adjacency_builder import *
+global edgeList,adjacencyList
+edgelist = []
+adjacencyList = {}
 
-CSVFILE = ""
+CSVFILE = "articles.csv"
 FileSetuptimestart= time.perf_counter()
 try:
     edgeList = load_citation_data(CSVFILE)
 except:
+    #Failsafe, if the edgelist couldn't be made
     edgeList = [("Paper D","Paper B"),("Paper D","Paper C"),("Paper B","Paper A"),("Paper B","Paper A")]
 
-#adjacencyList = adjacencyBuilder(edgelist) ->dfs to check for circular edges
+try:
+    #Note: I had to revert commit history (And recommit specific files on the behalf of the partner) because of a miscommunication.
+    adjacencyList = adjacency_builder.adjacencyBuilder(edgeList,None)
+    DAGTrue= adjacency_builder.is_dag(adjacencyList)
+    if (DAGTrue!=True):
+        print("Graph is not DAG")
+        raise Exception("Graph is not DAG")
+    
+except:
+    #Failsafe if edgelist conversion failed
+    adjacencyList={"Paper D": ["Paper B", "Paper C"],"Paper B": ["Paper A"],"Paper C": ["Paper A"]}
 
-#Hardcoding adjacency list to test
-adjacencyList={"Paper D": ["Paper B", "Paper C"],"Paper B": ["Paper A"],"Paper C": ["Paper A"]}
+
+
 FileSetuptimestop= time.perf_counter()
 
 adjtimestart = time.perf_counter()
@@ -33,4 +45,6 @@ print(f"Sorted Edge List: {sortedListEdge}")
 print(f"Time to create Unsorted List:{FileSetuptimestop-FileSetuptimestart}")
 print(f"Time to Sort Adjacency List: {adjtimestop-adjtimestart}")
 print(f"Time to Sort Edge List: {edgetimestop-edgetimestart}")
-#I want to make it print out the links, but I don't want to skip too far ahead since the rest of the project isn't done
+#Create a file to store the ordered list of papers permantently
+TopSort.finalFile(sortedList,"articles.csv")
+print("File of Sorted Papers Created Successfully")
