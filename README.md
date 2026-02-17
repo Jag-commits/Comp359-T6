@@ -43,3 +43,14 @@ Design Decisions
 
 *Analysis*
 -time complexity, if we encountered errors, how the performance differs across a hdd over an ssd. 
+
+Topological Sort Class
+
+  Adjacency List:
+    - The final time compexity is O(n+m)
+
+  Edge List:
+    - The final time complexity is O(m*n)
+
+  Create File:
+    - This function is O(n^2) as the function iterates through every node(n) in the sorted list, and finds the associated node in the csv to extract the information for storage.
