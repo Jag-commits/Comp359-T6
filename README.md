@@ -69,3 +69,22 @@ Edge List:
 
 Create File:
   - This function is O(n^2) as the function iterates through every node(n) in the sorted list, and finds the associated node in the csv to extract the information for storage.
+
+**Time Measurements**
+
+For each of the following, Tests were run 10 times per each measurement.
+
+Time it takes to create Lists
+- Reversing Map + ID: 0.0095 < x < 0.0190
+- Revering Map: 0.0095 < x < 0.0195
+- No Reversing Map, No ID Map: 0.0098 < x < 0.0157
+
+Time it takes to sort Edge Lists
+- Reversing At End, No ID map: 1.731*e^-5 < x < 2.473*e^-5
+- Reversed List Prior, No ID map: 1.6099*e^-5 < x < 2.2700*e^-5
+- Reversed List prior, ID Map: 1.580*e^-5 < x < 2.239*e^-5
+
+Time it takes to sort Adjacency Lists
+- Reversing At End, No ID map: 1.379*e^-5 < x < 2.079*e^-5
+- Reversed List Prior, no ID map: 1.3099*e^-5 < x < 1.8600*e^-5
+- Reversed List prior, ID Map: 1.269*e^-5 < x < 1.889*e^-5
