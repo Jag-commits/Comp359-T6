@@ -38,11 +38,13 @@ Design Decisions
 
 
 **The classes breakdown as such:**
+
 1. TopSort.py -> This class is responsible for using topological sort to take the adjacency list and output an array representing papers with the most citations and least citations amongst themselves. In effect, newer papers build upon the foundational knowledge of the papers they cite.
 2. Main.py -> This class is responsible for taking in the citation graph exported from Research Rabbit, converting the csv into an edge list, then converting the edge list to an adjacency list and finally ordering the edge list and adjacency list. The final reading order is written onto a csv file for permanent storage (Rather than being stored in memory).
 
 **How Topological Sorting Works**
-  We are using Kahn's algorithm which uses Breadth First Search (Queues) to sort a list of unordered list of nodes with dependencies. The algorithm hinges on the number of in-degrees for each node (Ie the number of incoming edges). 0 in-degrees means this node has no previous nodes it depends upon. In the context of this project, we instead use out-degrees (Outgoing edge from a node) to represent the number of papers that cite this particular paper ex) Paper B: [Paper A, Paper X] means paper B is cited by Paper A and Paper X. We use out-degrees for the sorted list to order the final list as Foundational Papers->Newer Papers.
+
+We are using Kahn's algorithm which uses Breadth First Search (Queues) to sort a list of unordered list of nodes with dependencies. The algorithm hinges on the number of in-degrees for each node (Ie the number of incoming edges). 0 in-degrees means this node has no previous nodes it depends upon. In the context of this project, we instead use out-degrees (Outgoing edge from a node) to represent the number of papers that cite this particular paper ex) Paper B: [Paper A, Paper X] means paper B is cited by Paper A and Paper X. We use out-degrees for the sorted list to order the final list as Foundational Papers->Newer Papers.
   
   For each cited paper (key), each citing paper's out-degree is increased by one (This paper has one more outgoing edge). If a node does not cite any other paper, it will have an outdegree of 0. The algorithm starts by calculating the out-degrees and adding nodes with an out-degree of 0 to the queue. This means, the queue starts filled with Papers that are not citing anything (Not dependant/building upon another paper's knowledge). 
   
@@ -51,13 +53,19 @@ Design Decisions
 **Analysis**
 -time complexity, if we encountered errors, how the performance differs across a hdd over an ssd. 
 
-Topological Sort Class
+**Topological Sort Class**
 
-  Adjacency List:
-    - The final time compexity is O(n+m)
+Adjacency List:
+- Setting up the in-degrees for the adjacency list is an O(n+m) procedure where N represents the keys, and M represents the values/edges for the dictionary.
+- Searching for in-degree=0 is an O(n) operation, all of the nodes are iterated through.
+- The BFS iteration is also O(n+m), every key(n) is iterated through once and each edges(m) is accessed by popping the key node.
+- The final time compexity is O(n+m)
 
-  Edge List:
-    - The final time complexity is O(m*n)
+Edge List:
+- To find the in-degrees(incoming edges) for each pair(m), the time complexity is O(m).
+- To find nodes(n) with no incoming edges is O(n).
+- The BFS iteration is O(n*m), the algorithm looks at every node(n) in the queue and looks through the pairs(m) to find associated edges.
+- The final time complexity is O(m*n)
 
-  Create File:
-    - This function is O(n^2) as the function iterates through every node(n) in the sorted list, and finds the associated node in the csv to extract the information for storage.
+Create File:
+  - This function is O(n^2) as the function iterates through every node(n) in the sorted list, and finds the associated node in the csv to extract the information for storage.
