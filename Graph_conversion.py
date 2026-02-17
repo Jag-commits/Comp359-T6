@@ -119,3 +119,17 @@ def graphBuilder(ResearchRabbit):
     graph = build_graph(edges)
     return graph, edges, id_map, reverse_map
 
+## temporary part##
+def make_schedule(order, per_week=3):
+    schedule = []
+    current_week=[]
+    for paper in order:
+        current_week.append(paper)
+
+        if len(current_week) == per_week:
+            schedule.append(current_week)
+            current_week=[]
+    # now add the remaining papers
+     if len(current_week)>0:
+        schedule.append(current_week)
+        return schedule
