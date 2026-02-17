@@ -44,8 +44,22 @@ def load_citation_data(file_name):
         reader = csv.DictReader(f)
 
         for row in reader:
-            new_paper = clean_name(row["new"])
-            ref_paper = clean_name(row["ref"])
+            """
+            Note for Pushpdeep, I had to change the new and ref to ResearchRabbitID and PrereqIDs for the articles.csv file. 
+            I don't know if they'll be different for the final csv - Jagpreet
+
+            """
+            new_paper = clean_name(row["ResearchRabbitId"])
+            ref_paper = clean_name(row["PrereqIds"])
+            
+            
+            if len(ref_paper.split(";"))>1:
+                for prereqs in row["PrereqIds"].split(";"):
+                    pairs.append((new_paper,prereqs))
+                continue
+
+            if new_paper and ref_paper:
+                pairs.append((new_paper, ref_paper))
 
             if new_paper and ref_paper:
                 pairs.append((new_paper, ref_paper))
@@ -90,32 +104,3 @@ def build_edges(pairs, reverse=False, use_ids=False):
             edges.append((u, v))
     
     return edges, id_map, reverse_map
-
-# build adjacency list from edges
-# edge (u, v) means u points to v
-def build_graph(edges):
-    graph = {}
-    for u, v in edges:
-        # make sure both nodes exist in graph
-        if u not in graph:
-            graph[u] = []
-        if v not in graph:
-            graph[v] = []
-        graph[u].append(v)
-    return graph
-
-#what to do ??
-#Convert citation data into directed graph (entry point for Sorting Team)
-# ResearchRabbit: file path (CSV) or list of (new, ref) citation pairs
-# Returns graph (adjacency list), edge_list, id_map, reverse_map
-# Edge direction: if C cites A then edge is (C, A) so dependencies are correct
-def graphBuilder(ResearchRabbit):
-    if isinstance(ResearchRabbit, str):
-        pair = load_citation_data(ResearchRabbit)
-    else:
-        pairs = [(clean_name(a), clean_name(b)) for a, b in ResearchRabbit]
-        pairs = [(a, b) for a, b in pairsif a and b]
-    edges, id_map, reverse_map = build_edges(pairs, reverse=False, use_ids=False)
-    graph = build_graph(edges)
-    return graph, edges, id_map, reverse_map
-

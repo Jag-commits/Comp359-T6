@@ -45,7 +45,8 @@ class TopSort:
 
         #My logic was that the papers that were cited the most should be foundational knowledge for papers that have no or few citations
         #From Kahn's algo, the papers that are not cited by anything ie indegree =0 come first.
-        return sortedList[::-1]
+        #return sortedList[::-1] -> Originally it was like this, but Pushpdeep implemented a way to get a reversed edge list where old paper->new paper                
+        return sortedList
     
     #I got the idea to compare the performance of an adjacency list against the edgelist
     #Keeping everything static apart from the in-degree setup
@@ -78,19 +79,15 @@ class TopSort:
                     inDegree[connectedNode] -=1
                     if inDegree[connectedNode]==0: 
                         bfsQueue.append(connectedNode)
-        return sortedList[::-1]
+        #Originally it was sortedList[::-1], but Pushpdeep implemented a way to get a reversed edge list where old paper->new paper                
+        return sortedList
     
-    #A simple method for testing purposes, it just returns a true or false for if the lists match
-    def verifySort(list)->bool:
-        #The test case graph is pretty much a rectangle, you can get 2 variants for the sort
-        trueList1 = ["Paper A","Paper B","Paper C","Paper D"]
-        trueList2 = ["Paper A","Paper C","Paper B","Paper D"]
-        return (trueList1==list or trueList2==list)
+    #This verifysort function is no longer viable, there are too many viable sorted list orders 
+    #def verifySort(list)->bool:
     
     #Extract Data and write.
     #Sorted Edge List should be identical or a viable variation of the sorted Adjacency list
     def finalFile(sortedAdjacencyList,csvFile):
-        print(sortedAdjacencyList)
         Papers =[]
         with open(csvFile, "r", encoding="utf-8") as f:
             reader = list(csv.DictReader(f))  # Load once

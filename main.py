@@ -10,7 +10,10 @@ adjacencyList = {}
 CSVFILE = "articles.csv"
 FileSetuptimestart= time.perf_counter()
 try:
-    edgeList = load_citation_data(CSVFILE)
+    pairs = load_citation_data(CSVFILE)
+    #No clue what part made adjacency list sort slower, maybe it's the long strings
+    edgeList = build_edges(pairs,True,False)
+    edgeList= edgeList[0]
 except:
     #Failsafe, if the edgelist couldn't be made
     edgeList = [("Paper D","Paper B"),("Paper D","Paper C"),("Paper B","Paper A"),("Paper B","Paper A")]
@@ -28,18 +31,17 @@ except:
     adjacencyList={"Paper D": ["Paper B", "Paper C"],"Paper B": ["Paper A"],"Paper C": ["Paper A"]}
 
 
-
 FileSetuptimestop= time.perf_counter()
 
 adjtimestart = time.perf_counter()
 #pass adjacency list into topoligical sort -> sortedList = Top.topologicalSort(adjacencyList)
 sortedList = TopSort.topologicalSort(adjacencyList)
 adjtimestop = time.perf_counter()
-print(f"List Is Verified: {TopSort.verifySort(sortedList)}")
 
 edgetimestart = time.perf_counter()
 sortedListEdge = TopSort.topologicalEdgeSort(edgeList)
 edgetimestop = time.perf_counter()
+
 print(f"Sorted Adjacency List: {sortedList}")
 print(f"Sorted Edge List: {sortedListEdge}")
 print(f"Time to create Unsorted List:{FileSetuptimestop-FileSetuptimestart}")
