@@ -44,22 +44,8 @@ def load_citation_data(file_name):
         reader = csv.DictReader(f)
 
         for row in reader:
-            """
-            Note for Pushpdeep, I had to change the new and ref to ResearchRabbitID and PrereqIDs for the articles.csv file. 
-            I don't know if they'll be different for the final csv - Jagpreet
-
-            """
-            new_paper = clean_name(row["ResearchRabbitId"])
-            ref_paper = clean_name(row["PrereqIds"])
-            
-            
-            if len(ref_paper.split(";"))>1:
-                for prereqs in row["PrereqIds"].split(";"):
-                    pairs.append((new_paper,prereqs))
-                continue
-
-            if new_paper and ref_paper:
-                pairs.append((new_paper, ref_paper))
+            new_paper = clean_name(row["new"])
+            ref_paper = clean_name(row["ref"])
 
             if new_paper and ref_paper:
                 pairs.append((new_paper, ref_paper))
