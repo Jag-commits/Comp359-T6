@@ -44,8 +44,19 @@ def load_citation_data(file_name):
         reader = csv.DictReader(f)
 
         for row in reader:
-            new_paper = clean_name(row["new"])
-            ref_paper = clean_name(row["ref"])
+            """
+            Note for Pushpdeep, I had to change the new and ref to ResearchRabbitID and PrereqIDs for the articles.csv file. 
+            I don't know if they'll be different for the final csv - Jagpreet
+
+            """
+            new_paper = clean_name(row["ResearchRabbitId"])
+            ref_paper = clean_name(row["PrereqIds"])
+            
+            
+            if len(ref_paper.split(";"))>1:
+                for prereqs in row["PrereqIds"].split(";"):
+                    pairs.append((new_paper,prereqs))
+                continue
 
             if new_paper and ref_paper:
                 pairs.append((new_paper, ref_paper))
@@ -90,3 +101,18 @@ def build_edges(pairs, reverse=False, use_ids=False):
             edges.append((u, v))
     
     return edges, id_map, reverse_map
+
+## temporary part##
+def make_schedule(order, per_week=3):
+    schedule = []
+    current_week=[]
+    for paper in order:
+        current_week.append(paper)
+
+        if len(current_week) == per_week:
+            schedule.append(current_week)
+            current_week=[]
+    # now add the remaining papers
+    if len(current_week)>0:
+        schedule.append(current_week)
+        return schedule
