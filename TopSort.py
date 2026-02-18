@@ -31,7 +31,6 @@ class TopSort:
         while (len(bfsQueue)!=0):
             #So it'll pop the first node, add it's children to the queue.
             firstNode = bfsQueue.popleft()
-            sortedList.append(firstNode)
             #Edge case where the list somehow has the node as a dependency, but not as a key
             for connectedNodes in inputList.get(firstNode,[]):
                 #We just popped the connected node, so it has 1 less incoming edge ie reduce indegrees by 1.
@@ -41,11 +40,12 @@ class TopSort:
                     bfsQueue.append(connectedNodes)
                 else:
                     continue
-            
+            sortedList.append(firstNode)
 
         #My logic was that the papers that were cited the most should be foundational knowledge for papers that have no or few citations
         #From Kahn's algo, the papers that are not cited by anything ie indegree =0 come first.
-        return sortedList[::-1]
+        #return sortedList[::-1] -> Originally it was like this, but Pushpdeep implemented a way to get a reversed edge list where old paper->new paper                
+        return sortedList
     
     #I got the idea to compare the performance of an adjacency list against the edgelist
     #Keeping everything static apart from the in-degree setup
@@ -70,7 +70,6 @@ class TopSort:
         
         while (len(bfsQueue)!=0):
             firstNode = bfsQueue.popleft()
-            sortedList.append(firstNode)
             #I had to change this step, I can't just look for the key from the pairs
             for pair in inputlist:
                 if pair[0]==firstNode:
@@ -78,23 +77,21 @@ class TopSort:
                     inDegree[connectedNode] -=1
                     if inDegree[connectedNode]==0: 
                         bfsQueue.append(connectedNode)
-        return sortedList[::-1]
+            sortedList.append(firstNode)
+        #Originally it was sortedList[::-1], but Pushpdeep implemented a way to get a reversed edge list where old paper->new paper                
+        return sortedList
     
-    #A simple method for testing purposes, it just returns a true or false for if the lists match
-    def verifySort(list)->bool:
-        #The test case graph is pretty much a rectangle, you can get 2 variants for the sort
-        trueList1 = ["Paper A","Paper B","Paper C","Paper D"]
-        trueList2 = ["Paper A","Paper C","Paper B","Paper D"]
-        return (trueList1==list or trueList2==list)
+    #This verifysort function is no longer viable, there are too many viable sorted list orders 
+    #def verifySort(list)->bool:
     
     #Extract Data and write.
     #Sorted Edge List should be identical or a viable variation of the sorted Adjacency list
-    def finalFile(sortedAdjacencyList,csvFile):
-        print(sortedAdjacencyList)
+    def finalFile(sortedAdjacencyList,idMap,csvFile):
         Papers =[]
         with open(csvFile, "r", encoding="utf-8") as f:
             reader = list(csv.DictReader(f))  # Load once
-            for RRabbitID in sortedAdjacencyList:
+            for normalID in sortedAdjacencyList:
+                RRabbitID = idMap[normalID]
                 for rows in reader:
                     if ((rows["ResearchRabbitId"]).strip())==RRabbitID:
                         #Credit goes to Jang for extracting information from csv ->Code segment from commit that had to be reverted due to it replacing a partner's code

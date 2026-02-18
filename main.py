@@ -10,7 +10,13 @@ adjacencyList = {}
 CSVFILE = "articles.csv"
 FileSetuptimestart= time.perf_counter()
 try:
-    edgeList = load_citation_data(CSVFILE)
+    pairs = load_citation_data(CSVFILE)
+    #The longer RRabbit IDs make it slower compared to normalized IDs
+    edgeList = build_edges(pairs,True,True)
+    #We'll use this at the very last step to reconvert the normalized IDs to RRabbit IDs 
+    idMap=edgeList[2]
+    edgeList= edgeList[0]
+    
 except:
     #Failsafe, if the edgelist couldn't be made
     edgeList = [("Paper D","Paper B"),("Paper D","Paper C"),("Paper B","Paper A"),("Paper B","Paper A")]
@@ -26,25 +32,26 @@ try:
 except:
     #Failsafe if edgelist conversion failed
     adjacencyList={"Paper D": ["Paper B", "Paper C"],"Paper B": ["Paper A"],"Paper C": ["Paper A"]}
-
-
-
 FileSetuptimestop= time.perf_counter()
 
-adjtimestart = time.perf_counter()
-#pass adjacency list into topoligical sort -> sortedList = Top.topologicalSort(adjacencyList)
-sortedList = TopSort.topologicalSort(adjacencyList)
-adjtimestop = time.perf_counter()
-print(f"List Is Verified: {TopSort.verifySort(sortedList)}")
+#Big error found -> The second sorting call (Regardless of whether it's edgelist or adjlist) will run faster
+#For Testing Purposes, I'm running both methods prematurely, such that the data is already cached. 
+TopSort.topologicalEdgeSort(edgeList)
+TopSort.topologicalSort(adjacencyList)
 
 edgetimestart = time.perf_counter()
 sortedListEdge = TopSort.topologicalEdgeSort(edgeList)
 edgetimestop = time.perf_counter()
+
+adjtimestart = time.perf_counter()
+sortedList = TopSort.topologicalSort(adjacencyList)
+adjtimestop = time.perf_counter()
+
 print(f"Sorted Adjacency List: {sortedList}")
 print(f"Sorted Edge List: {sortedListEdge}")
 print(f"Time to create Unsorted List:{FileSetuptimestop-FileSetuptimestart}")
 print(f"Time to Sort Adjacency List: {adjtimestop-adjtimestart}")
 print(f"Time to Sort Edge List: {edgetimestop-edgetimestart}")
 #Create a file to store the ordered list of papers permantently
-TopSort.finalFile(sortedList,"articles.csv")
+TopSort.finalFile(sortedList,idMap,"articles.csv")
 print("File of Sorted Papers Created Successfully")
