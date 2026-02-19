@@ -80,22 +80,43 @@ Create File:
 **Time Measurements**
 
 For each of the following, Tests were run 10 times per each measurement.
+Time it takes to create Lists, Measured in Seconds
 
-Time it takes to create Lists
-(SSD)
-- Reversing Map + ID: 0.0095 < x < 0.0190
-- Reversing Map: 0.0095 < x < 0.0195
-- No Reversing Map, No ID Map: 0.0098 < x < 0.0157
+(HDD)
+- No Reverse Map, no IDs: 0.000202 < x < 0003629  
+Mean: 0.00024578  SD: 6.684e-05
+- Reversed List, No IDs: 0.0001852 < x < 0002682  
+Mean: 0.0002028  SD: 2.459e-05
+- Reversed List, IDs: 0001912 < x < 0002592 
+Mean: 0.0002072  SD: 2.321e-05
+  
+(NVME SSD)
+- No Reversing Map, No ID Map: 0.000218 < x < 000288  
+Mean: 0.000236  SD: 1.914e-05 
+- Reversing Map, No IDs: 0.000220 < x < 0.000297  
+Mean: 0.000237  SD: 2.386e-05
+- Reversing Map + ID: 0.000230 < x < 0.000299  
+Mean: 0.000239  SD: 2.268e-05
 
 Time it takes to sort Edge Lists
-- Reversing At End, No ID map: 1.731*e^-5 < x < 2.473*e^-5
-- Reversed List Prior, No ID map: 1.6099*e^-5 < x < 2.2700*e^-5
-- Reversed List prior, ID Map: 1.580*e^-5 < x < 2.239*e^-5
+- Reversing At End, No ID map: 4.200e-06 < x < 7.500e-06  
+Mean: 5.070e-06  SD: 1.066e-06    
+- Reversed List Prior, No ID map: 4.100e-06 < x < 5.9999e-06  
+Mean: 4.580e-06  SD: 6.126e-07 
+- Reversed List prior, ID Map: 3.899e-06 < x < 4.799e-06  
+Mean: 4.090e-06  SD: 3.229e-07 
 
 Time it takes to sort Adjacency Lists
-- Reversing At End, No ID map: 1.379*e^-5 < x < 2.079*e^-5
-- Reversed List Prior, no ID map: 1.3099*e^-5 < x < 1.8600*e^-5
-- Reversed List prior, ID Map: 1.269*e^-5 < x < 1.889*e^-5
+- Reversing At End, No ID map: 3.599e-06 < x < 6.699e-06  
+Mean: 4.310e-06  SD: 9.521e-07 
+- Reversed List Prior, no ID map: 3.300e-06 < x < 4.400e-06  
+Mean: 3.730e-06  SD: 3.162e-07 
+- Reversed List prior, ID Map: 3.200e-06 < x < 3.700e-06  
+Mean: 3.370e-06  SD: 1.663e-07
+
+From the evidence, the results seem to suggest reversing the list with an ID map has genuine benefits over the older implementation of reversing the final sorted list with Research Rabbit IDs. Reversing the list through [::-1] has an additional time complexity of O(n). This could explain why starting with a reversed list is consistently faster than without, as the algorithm doesn't need to spend additional time reversing the order of nodes. The ID maps provided a slight advantage over the Research Rabbit IDs. This could be because the long RRabbit ID strings could have reduced the hashing performance for looking up a key in the adjacency list. The edge list implementation could be seeing an improvement with the ID system because of the comparison checks looking for matching node names (Eg if pair[0] == firstNode). Since the node names are drastically shorter, the comparisons are less expensive. As for the time taken to generate the lists, there seems to be no noticeable impact from using an SSD over a HDD. This is likely because the file is so small, any difference in reading speeds is miniscule compared to the CPU overhead to read and store the data in memory. There also seems to be an unnoticeable difference in the time taken for additional steps like reversing or adding an ID map to the list. These additions may happen incredibly quickly, and they won't show up in rounded results.
+
+Overall, for the purposes of generating a viable reading schedule, normalizing IDs for each node and reversing the list (Cited->Citing) prior to sorting provides considerable performance uplifts with unnoticeable performance degredation in list creation.
 
 References:
 GeeksforGeeks. (2025, October 31). Topological sorting using BFS - Kahn’s algorithm. https://www.geeksforgeeks.org/dsa/topological-sorting-indegree-based-solution/ 
