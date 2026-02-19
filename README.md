@@ -40,8 +40,10 @@ Design Decisions
 
 **The classes breakdown as such:**
 
-1. TopSort.py -> This class is responsible for using topological sort to take the adjacency list and output an array representing papers with the most citations and least citations amongst themselves. In effect, newer papers build upon the foundational knowledge of the papers they cite.
+1. TopSort.py -> This class is responsible for using topological sort to take the adjacency list/edge list and output an array representing papers with the most citations and least citations amongst themselves. In effect, newer papers build upon the foundational knowledge of the papers they cite. The class is also responsible for writing the final sorting order onto a csv file, referencing a map to reconstruct the Research Rabbit Id's from shorter normalized IDs. The Research Rabbit IDs are used to source the paper's information from the input csv file.
 2. Main.py -> This class is responsible for taking in the citation graph exported from Research Rabbit, converting the csv into an edge list, then converting the edge list to an adjacency list and finally ordering the edge list and adjacency list. The final reading order is written onto a csv file for permanent storage (Rather than being stored in memory).
+3. Graph_conversion.py -> This file is responsible for taking in the input csv file, building pairs to represent edges (Citing,Cited), and finally parsing the edge list in the build_edges function. The build_edges function can rebuild the edge list to reverse the order of pairs (Cited,Citing), and normalize the long Research Rabbit IDs into shorter values like P1 and P2 (Better hashing performance with adjacency lists). The build_edges function also returns a reverse map, which can reconvert the normalized IDs back into the Research Rabbit IDs.
+4. adjacency_builder.py -> This class takes the edge lists created by the graph_conversion file and creates adjacency lists, as well as verifying the adjacency list is acyclic. The verification process is the most important part of this class, as topological sort simply does not work with graphs that contain cycles.
 
 **How Topological Sorting Works**
 
@@ -76,8 +78,9 @@ Create File:
 For each of the following, Tests were run 10 times per each measurement.
 
 Time it takes to create Lists
+(SSD)
 - Reversing Map + ID: 0.0095 < x < 0.0190
-- Revering Map: 0.0095 < x < 0.0195
+- Reversing Map: 0.0095 < x < 0.0195
 - No Reversing Map, No ID Map: 0.0098 < x < 0.0157
 
 Time it takes to sort Edge Lists
@@ -89,3 +92,6 @@ Time it takes to sort Adjacency Lists
 - Reversing At End, No ID map: 1.379*e^-5 < x < 2.079*e^-5
 - Reversed List Prior, no ID map: 1.3099*e^-5 < x < 1.8600*e^-5
 - Reversed List prior, ID Map: 1.269*e^-5 < x < 1.889*e^-5
+
+References:
+GeeksforGeeks. (2025, October 31). Topological sorting using BFS - Kahn’s algorithm. https://www.geeksforgeeks.org/dsa/topological-sorting-indegree-based-solution/ 
