@@ -70,6 +70,10 @@ Edge List:
 - The BFS iteration is O(n*m), the algorithm looks at every node(n) in the queue and looks through the pairs(m) to find associated edges.
 - The final time complexity is O(m*n)
 
+Verify List:
+- To verify the sort, the program has to iterate through each node (n) in the adjacency list, and the connected node(m).
+- The time complexity is O(n+m)
+
 Create File:
   - This function is O(n^2) as the function iterates through every node(n) in the sorted list, and finds the associated node in the csv to extract the information for storage.
 

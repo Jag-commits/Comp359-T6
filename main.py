@@ -27,6 +27,8 @@ try:
     DAGTrue= adjacency_builder.is_dag(adjacencyList)
     if (DAGTrue!=True):
         print("Graph is not DAG")
+        #If the adjacency list has a cycle, it is also found in the edgeList.
+        edgeList = [("Paper D","Paper B"),("Paper D","Paper C"),("Paper B","Paper A"),("Paper B","Paper A")]
         raise Exception("Graph is not DAG")
     
 except:
@@ -47,8 +49,10 @@ adjtimestart = time.perf_counter()
 sortedList = TopSort.topologicalSort(adjacencyList)
 adjtimestop = time.perf_counter()
 
+#The P1,P2 aren't representative of the order from the csv file, they are from the pairs
 print(f"Sorted Adjacency List: {sortedList}")
 print(f"Sorted Edge List: {sortedListEdge}")
+print(f"Sorted List is Verified: {TopSort.verifySort(sortedList,adjacencyList)}")
 print(f"Time to create Unsorted List:{FileSetuptimestop-FileSetuptimestart}")
 print(f"Time to Sort Adjacency List: {adjtimestop-adjtimestart}")
 print(f"Time to Sort Edge List: {edgetimestop-edgetimestart}")

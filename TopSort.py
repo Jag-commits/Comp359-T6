@@ -81,8 +81,15 @@ class TopSort:
         #Originally it was sortedList[::-1], but Pushpdeep implemented a way to get a reversed edge list where old paper->new paper                
         return sortedList
     
-    #This verifysort function is no longer viable, there are too many viable sorted list orders 
-    #def verifySort(list)->bool:
+    #Redid the verifySort, noticed that sorted list is only wrong if the cited papers are after the citing papers 
+    def verifySort(sortedList, adjacencyList)->bool:
+        for node in adjacencyList:
+            for connectedNode in adjacencyList[node]:
+                #if the citing paper appears before the cited paper, it has to be in the wrong order
+                if sortedList.index(node) >= sortedList.index(connectedNode):
+                    print(f"Error, node: {node} should have been before node: {connectedNode}")
+                    return False
+        return True
     
     #Extract Data and write.
     #Sorted Edge List should be identical or a viable variation of the sorted Adjacency list
