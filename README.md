@@ -2,6 +2,12 @@ COMP 359, ON 1 Assignment 2 README
 
 Responsibility Split: https://docs.google.com/document/d/1CNVFqzEXJpOW_nXpOcXWMrRaES8_cz77Pl4NT2S9Sik/edit?usp=sharing 
 
+The goal was to create an implementation of topological sort that would generate a viable reading schedule for a Research Rabbit export. Some measurements were gathered to evaluate which approach to the implementation is the most efficient, results are evaluated at the end.
+
+**Notes**
+1. As of February 19th, we are still using Pushpdeep's temporary Research Rabbit export in place of the final export promised from another group member. Therefore, we are unable to discuss the intricacies of the topics (Since they're temporary).
+2. The Research Rabbit csv file must have the columns: DOI, Title, Year, ResearchRabbitId, PrereqIds
+
 **Analysis Framework**
 
 Independent Variables
@@ -16,11 +22,13 @@ Dependent Variables
 Baseline for Verification:
 - Initially, smaller lists enabled a verification process against manually checked variations in sorting order.
   But, as amount of papers increase, this process becomes impractical due to numerous variations.
+- The sorted list is compared to the new verification method to ensure pre-requisite papers are in the sorted list prior to the papers that cite them.
   
 Evaluation Method
 - The citation graph csv is loaded into memory
 - The citation csv is first converted into an edgelist.
 - Each edge is mapped into an adjacency list and checked for cycles
+- The final sorted list is sent through the baseline to ensure it's in a valid order.
 - The time to sort an edge list and the associated adjacency list are compared
   
 Failure Conditions
@@ -38,9 +46,10 @@ Design Decisions
 - For measuring the speed of sorting the adjacency list compared to the edge list, the second sort call would be consistently faster than the first. It did not matter whether this was the adjacency list or edge list (The adjacency list should have been faster). This could have been caused by node values being cached during the first sorting call, and reused during the second call. To keep the measurements accurate, both sorting algorithms were called prior to measurements, this fixed our skewed results issue. This change is only for measurement purposes, otherwise the program should only use adjacency lists for maximum sorting performance.
 
 
+
 **The classes breakdown as such:**
 
-1. TopSort.py -> This class is responsible for using topological sort to take the adjacency list/edge list and output an array representing papers with the most citations and least citations amongst themselves. In effect, newer papers build upon the foundational knowledge of the papers they cite. The class is also responsible for writing the final sorting order onto a csv file, referencing a map to reconstruct the Research Rabbit Id's from shorter normalized IDs. The Research Rabbit IDs are used to source the paper's information from the input csv file.
+1. TopSort.py -> This class is responsible for using topological sort to take the adjacency list/edge list and output an array representing papers with the most citations and least citations amongst themselves. In effect, newer papers build upon the foundational knowledge of the papers they cite. The class is also responsible for writing the final sorting order onto a csv file, referencing a map to reconstruct the Research Rabbit Id's from shorter normalized IDs. The Research Rabbit IDs are used to source the paper's information from the input csv file. The class also contains a verification function to ensure pre-requisite papers were read before the newer papers.
 2. Main.py -> This class is responsible for taking in the citation graph exported from Research Rabbit, converting the csv into an edge list, then converting the edge list to an adjacency list and finally ordering the edge list and adjacency list. The final reading order is written onto a csv file for permanent storage (Rather than being stored in memory).
 3. Graph_conversion.py -> This file is responsible for taking in the input csv file, building pairs to represent edges (Citing,Cited), and finally parsing the edge list in the build_edges function. The build_edges function can rebuild the edge list to reverse the order of pairs (Cited,Citing), and normalize the long Research Rabbit IDs into shorter values like P1 and P2 (Better hashing performance with adjacency lists). The build_edges function also returns a reverse map, which can reconvert the normalized IDs back into the Research Rabbit IDs.
 4. adjacency_builder.py -> This class takes the edge lists created by the graph_conversion file and creates adjacency lists, as well as verifying the adjacency list is acyclic. The verification process is the most important part of this class, as topological sort simply does not work with graphs that contain cycles.
@@ -72,7 +81,8 @@ Edge List:
 
 Verify List:
 - To verify the sort, the program has to iterate through each node (n) in the adjacency list, and the connected node(m).
-- The time complexity is O(n+m)
+- The program has to find the index location for each node (n) and connected node (m) while looping through nodes in the adjacency list. Meaning this part is O(n^2)
+- The time complexity is O(n^2)
 
 Create File:
   - This function is O(n^2) as the function iterates through every node(n) in the sorted list, and finds the associated node in the csv to extract the information for storage.
