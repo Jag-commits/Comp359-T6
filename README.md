@@ -128,5 +128,6 @@ From the evidence, the results seem to suggest reversing the list with an ID map
 
 Overall, for the purposes of generating a viable reading schedule, normalizing IDs for each node and reversing the list (Cited->Citing) prior to sorting provides considerable performance uplifts with unnoticeable performance degredation in list creation.
 
+Vlog Jagpreet: https://drive.google.com/file/d/1nR8qNyfJjg-_TDoSD-GFVF1stXQ0fdpN/view?usp=sharing 
 References:
 GeeksforGeeks. (2025, October 31). Topological sorting using BFS - Kahn’s algorithm. https://www.geeksforgeeks.org/dsa/topological-sorting-indegree-based-solution/ 
