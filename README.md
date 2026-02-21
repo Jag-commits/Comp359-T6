@@ -129,5 +129,14 @@ From the evidence, the results seem to suggest reversing the list with an ID map
 Overall, for the purposes of generating a viable reading schedule, normalizing IDs for each node and reversing the list (Cited->Citing) prior to sorting provides considerable performance uplifts with unnoticeable performance degredation in list creation.
 
 Vlog Jagpreet: https://drive.google.com/file/d/1nR8qNyfJjg-_TDoSD-GFVF1stXQ0fdpN/view?usp=sharing 
+
 References:
 GeeksforGeeks. (2025, October 31). Topological sorting using BFS - Kahn’s algorithm. https://www.geeksforgeeks.org/dsa/topological-sorting-indegree-based-solution/ 
+
+Hogg, G. (2024, July 18). Graphs: Edge List, Adjacency Matrix, Adjacency List, DFS, BFS - DSA Course in Python Lecture 11 [Video]. YouTube. https://www.youtube.com/watch?v=4jyESQDrpls
+
+Kindson The Genius. (2021, September 18). Part 8 - What is the Adjacency List or Matrix [Video]. YouTube. https://www.youtube.com/watch?v=l3aLJIM9RGo
+
+ness-intricity101. (2021, November 11). What is DAG? [Video]. YouTube. https://www.youtube.com/watch?v=1Yh5S-S6wsI
+
+
