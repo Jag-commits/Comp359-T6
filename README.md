@@ -5,8 +5,8 @@ Responsibility Split: https://docs.google.com/document/d/1CNVFqzEXJpOW_nXpOcXWMr
 The goal was to create an implementation of topological sort that would generate a viable reading schedule for a Research Rabbit export. Some measurements were gathered to evaluate which approach to the implementation is the most efficient, results are evaluated at the end.
 
 **Notes**
-1. As of February 19th, we are still using Pushpdeep's temporary Research Rabbit export in place of the final export promised from another group member. Therefore, we are unable to discuss the intricacies of the topics (Since they're temporary).
-2. The Research Rabbit csv file must have the columns: DOI, Title, Year, ResearchRabbitId, PrereqIds
+1. The Research Rabbit (Pushpdeep's) export represents 8 papers covering the topic of machine learning. Various prerequisite papers are used to build upon the knowledge for the paper, Francesco Rundo (2019).
+2. Any other Research Rabbit csv file must have the columns: DOI, Title, Year, ResearchRabbitId, PrereqIds
 
 **Analysis Framework**
 
@@ -61,10 +61,22 @@ We are using Kahn's algorithm which uses Breadth First Search (Queues) to sort a
   For each cited paper (key), each citing paper's out-degree is increased by one (This paper has one more outgoing edge). If a node does not cite any other paper, it will have an outdegree of 0. The algorithm starts by calculating the out-degrees and adding nodes with an out-degree of 0 to the queue. This means, the queue starts filled with Papers that are not citing anything (Not dependant/building upon another paper's knowledge). 
   
   The program then performs a breadth first search, popping the nodes in the queues and looking through the papers that cite this particular paper. Since the parent node was popped, the out-degrees for each connected node is decreased by one (There is one less outgoing edge). If a child node has an out-degree of 0, it can be added to the queue as paper it depends on has already been "read". This process of popping nodes in the queue and looking through connected nodes is repeated until there are no nodes remaining.
-  
-**Analysis**
--time complexity, if we encountered errors, how the performance differs across a hdd over an ssd. 
 
+**Input and Output CSV Files**
+
+The input file, consisting of the aforementioned 8 papers, is sourced from Research Rabbit's citation graph. Prerequisite's/Connections were built manually as Research Rabbit does not provide the edges/connection data.
+
+The final sorted file consists of the DOI, Year, Title, Link-> The link in particular is useful for referencing these papers at a later point in time.
+
+To ensure the list was sorted 100% correctly, the file was manually checked. 
+
+The Sorted Order: Han (2019), Auvolat (2006), Nassirtoussi (2015), Tkac (2016), Lee (2019), Sutskever (2014), Cavalcante (2016), Rundo (2019)
+
+Note: Sutskever (2014) cites Auvolat (2016), which would be logically impossible. However, this publication date seems to be an error on the part of Research Rabbit as the paper has conflicting dates when viewed in the map (2016) and list (2015).
+Based on research, the actual date is 2006: https://scholar.google.com/citations?view_op=view_citation&hl=fr&user=QWCHPhMAAAAJ&citation_for_view=QWCHPhMAAAAJ:zYLM7Y9cAGgC.
+
+**Analysis**
+-time complexity and how the performance differs across a hdd over an ssd. 
 **Topological Sort Class**
 
 Adjacency List:
