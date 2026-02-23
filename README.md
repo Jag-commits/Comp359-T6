@@ -110,7 +110,7 @@ Time it takes to create Lists, Measured in Seconds
 Mean: 0.00024578  SD: 6.684e-05
 - Reversed List, No IDs: 0.0001852 < x < 0002682  
 Mean: 0.0002028  SD: 2.459e-05
-- Reversed List, IDs: 0001912 < x < 0002592 
+- Reversed List, IDs: 0001912 < x < 0002592  
 Mean: 0.0002072  SD: 2.321e-05
   
 (NVME SSD)
@@ -126,7 +126,7 @@ Time it takes to sort Edge Lists
 Mean: 6.6300e-06  SD: 1.4086e-06    
 - Reversed List Prior, No ID map: 5.3000e-06 < x < 9.9000e-06  
 Mean: 5.9800e-06  SD: 6.126e-07 
-- Reversed List prior, ID Map: 5.2000e-06 < x < 6.1000e-06
+- Reversed List prior, ID Map: 5.2000e-06 < x < 6.1000e-06  
 Mean: 5.4100e-06  SD: 3.0710e-07 
 
 Time it takes to sort Adjacency Lists
