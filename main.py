@@ -57,5 +57,6 @@ print(f"Time to create Unsorted List:{FileSetuptimestop-FileSetuptimestart}")
 print(f"Time to Sort Adjacency List: {adjtimestop-adjtimestart}")
 print(f"Time to Sort Edge List: {edgetimestop-edgetimestart}")
 #Create a file to store the ordered list of papers permantently
-TopSort.finalFile(sortedList,idMap,"articles.csv")
+TopSort.finalFile(sortedList,idMap,CSVFILE)
 print("File of Sorted Papers Created Successfully")
+
