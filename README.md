@@ -77,6 +77,7 @@ Based on research, the actual date is 2006: https://scholar.google.com/citations
 
 **Analysis**
 -time complexity and how the performance differs across a hdd over an ssd. 
+
 **Topological Sort Class**
 
 Adjacency List:
@@ -121,20 +122,20 @@ Mean: 0.000237  SD: 2.386e-05
 Mean: 0.000239  SD: 2.268e-05
 
 Time it takes to sort Edge Lists
-- Reversing At End, No ID map: 4.200e-06 < x < 7.500e-06  
-Mean: 5.070e-06  SD: 1.066e-06    
-- Reversed List Prior, No ID map: 4.100e-06 < x < 5.9999e-06  
-Mean: 4.580e-06  SD: 6.126e-07 
-- Reversed List prior, ID Map: 3.899e-06 < x < 4.799e-06  
-Mean: 4.090e-06  SD: 3.229e-07 
+- Reversing At End, No ID map: 5.2000e-06 < x < 8.7000e-06  
+Mean: 6.6300e-06  SD: 1.4086e-06    
+- Reversed List Prior, No ID map: 5.3000e-06 < x < 9.9000e-06  
+Mean: 5.9800e-06  SD: 6.126e-07 
+- Reversed List prior, ID Map: 5.2000e-06 < x < 6.1000e-06
+Mean: 5.4100e-06  SD: 3.0710e-07 
 
 Time it takes to sort Adjacency Lists
-- Reversing At End, No ID map: 3.599e-06 < x < 6.699e-06  
-Mean: 4.310e-06  SD: 9.521e-07 
-- Reversed List Prior, no ID map: 3.300e-06 < x < 4.400e-06  
-Mean: 3.730e-06  SD: 3.162e-07 
-- Reversed List prior, ID Map: 3.200e-06 < x < 3.700e-06  
-Mean: 3.370e-06  SD: 1.663e-07
+- Reversing At End, No ID map: 4.0000e-06 < x < 7.4000e-06  
+Mean: 4.9400e-06  SD: 1.2367e-06 
+- Reversed List Prior, no ID map: 4.0000e-06 < x < 7.7000e-06  
+Mean: 4.5400e-06  SD: 1.1228e-06 
+- Reversed List prior, ID Map: 3.8000e-06 < x < 4.5000e-06  
+Mean: 4.1500e-06  SD: 2.1730e-07
 
 From the evidence, the results seem to suggest reversing the list with an ID map has genuine benefits over the older implementation of reversing the final sorted list with Research Rabbit IDs. Reversing the list through [::-1] has an additional time complexity of O(n). This could explain why starting with a reversed list is consistently faster than without, as the algorithm doesn't need to spend additional time reversing the order of nodes. The ID maps provided a slight advantage over the Research Rabbit IDs. This could be because the long RRabbit ID strings could have reduced the hashing performance for looking up a key in the adjacency list. The edge list implementation could be seeing an improvement with the ID system because of the comparison checks looking for matching node names (Eg if pair[0] == firstNode). Since the node names are drastically shorter, the comparisons are less expensive. As for the time taken to generate the lists, there seems to be no noticeable impact from using an SSD over a HDD. This is likely because the file is so small, any difference in reading speeds is miniscule compared to the CPU overhead to read and store the data in memory. There also seems to be an unnoticeable difference in the time taken for additional steps like reversing or adding an ID map to the list. These additions may happen incredibly quickly, and they won't show up in rounded results.
 
