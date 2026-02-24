@@ -143,7 +143,16 @@ Overall, for the purposes of generating a viable reading schedule, normalizing I
 
 Vlog Jagpreet: https://drive.google.com/file/d/1nR8qNyfJjg-_TDoSD-GFVF1stXQ0fdpN/view?usp=sharing 
 
+Vlog Pushpdeep: https://www.youtube.com/watch?v=Cwitf_hmUZM
+
 References:
+
+Research Rabbit Collection Link (Thanks to Pushpdeep): https://app.researchrabbit.ai/folder-shares/5a40ab39-9b72-4d2c-9fee-18fcdfc63cf9
+
+Khapra, S. (2025, October 2). Topological Sorting in Graph | using DFS | Lecture 117 [Video]. YouTube. https://www.youtube.com/watch?v=0WIINUY12Yg
+
+Stapleton, A. (2024, March 5). How To Use Research Rabbit - Effortlessly Explore Literature for FREE! [Video]. YouTube. https://www.youtube.com/watch?v=phWqcGcxeE4
+
 GeeksforGeeks. (2025, October 31). Topological sorting using BFS - Kahn’s algorithm. https://www.geeksforgeeks.org/dsa/topological-sorting-indegree-based-solution/ 
 
 Hogg, G. (2024, July 18). Graphs: Edge List, Adjacency Matrix, Adjacency List, DFS, BFS - DSA Course in Python Lecture 11 [Video]. YouTube. https://www.youtube.com/watch?v=4jyESQDrpls
