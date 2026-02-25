@@ -145,6 +145,8 @@ Vlog Jagpreet: https://drive.google.com/file/d/1nR8qNyfJjg-_TDoSD-GFVF1stXQ0fdpN
 
 Vlog Pushpdeep: https://www.youtube.com/watch?v=Cwitf_hmUZM
 
+Vlog Jang Toor: https://youtu.be/f6MdI_mH4k8
+
 References:
 
 Research Rabbit Collection Link (Thanks to Pushpdeep): https://app.researchrabbit.ai/folder-shares/5a40ab39-9b72-4d2c-9fee-18fcdfc63cf9
