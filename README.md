@@ -147,6 +147,8 @@ Vlog Pushpdeep: https://www.youtube.com/watch?v=Cwitf_hmUZM
 
 Vlog Jang Toor: https://youtu.be/f6MdI_mH4k8
 
+Karthik's Report: https://docs.google.com/document/d/1gLh3ZuCwJmidYMdB_oYAxa4DpTxp2bfKU6yjoi0GKAs/edit?usp=sharing 
+
 References:
 
 Research Rabbit Collection Link (Thanks to Pushpdeep): https://app.researchrabbit.ai/folder-shares/5a40ab39-9b72-4d2c-9fee-18fcdfc63cf9
