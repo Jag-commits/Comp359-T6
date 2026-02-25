@@ -4,6 +4,30 @@ Responsibility Split: https://docs.google.com/document/d/1CNVFqzEXJpOW_nXpOcXWMr
 
 The goal was to create an implementation of topological sort that would generate a viable reading schedule for a Research Rabbit export. Some measurements were gathered to evaluate which approach to the implementation is the most efficient, results are evaluated at the end.
 
+## Overview  
+I built a small citation network (6 papers) from ResearchRabbit on serverless computing (FaaS) and lightweight execution environments, then turned it into a directed acyclic graph (DAG) to produce a valid topological-sort reading order.
+
+## Dataset (CSV)  
+The input dataset is stored as a CSV (for example, assignment2final.csv) containing paper metadata (title, year, DOI/link fields when available) plus:  
+
+- ResearchRabbitId: unique ID for each paper (node)  
+- PrereqIds: comma-separated list of prerequisite paper IDs (papers that must be read first)
+
+## How it works  
+1. Treat “Paper A cites Paper B” as a prerequisite relationship for reading.  
+2. Invert the direction to build prerequisite edges: ReferencedPaper → NewPaper  
+3. Use PrereqIds to construct the adjacency list and validate the graph has no cycles (must be a DAG).  
+4. Run Kahn’s algorithm to compute a valid topological order (reading schedule).  
+5. Export the final reading order to a CSV (for example, Sorted Papers.csv) for easy reference.
+
+## Papers included (6 nodes)  
+- Hendrickson (OpenLambda)  
+- Akkus (SAND)  
+- Jonas (Berkeley View)  
+- Agache (Firecracker)  
+- Sreekanti (Cloudburst)  
+- Shahrad (Serverless in the Wild)  
+
 **Notes**
 1. The Research Rabbit (Pushpdeep's) export represents 8 papers covering the topic of machine learning. Various prerequisite papers are used to build upon the knowledge for the paper, Francesco Rundo (2019).
 2. Any other Research Rabbit csv file must have the columns: DOI, Title, Year, ResearchRabbitId, PrereqIds
